@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
-import "./App.css";
 import { IoIosAddCircle } from "react-icons/io";
+import "./App.css";
+import { AiFillEdit } from "react-icons/ai";
 
 function App() {
   const [todos, setTodos] = useState(() => {
@@ -10,6 +11,9 @@ function App() {
     return storedTodos ? JSON.parse(storedTodos) : [];
   });
   const [task, setTask] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editTask, setEditTask] = useState("");
 
   // Update local storage whenever TODOs change
   useEffect(() => {
@@ -28,6 +32,24 @@ function App() {
     setTodos(newTodos);
   };
 
+  const handleEditTodo = (index) => {
+    setIsEditing(true);
+    setEditIndex(index);
+    setEditTask(todos[index]);
+  };
+
+  const handleSaveEdit = () => {
+    if (editTask.trim() !== "") {
+      const newTodos = todos.map((todo, index) =>
+        index === editIndex ? editTask : todo
+      );
+      setTodos(newTodos);
+      setIsEditing(false);
+      setEditIndex(null);
+      setEditTask("");
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -36,18 +58,25 @@ function App() {
           <input
             type="text"
             placeholder="Add a new task"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
+            value={isEditing ? editTask : task}
+            onChange={(e) =>
+              isEditing ? setEditTask(e.target.value) : setTask(e.target.value)
+            }
           />
-          <button onClick={handleAddTodo}><IoIosAddCircle /></button>
+          <button onClick={isEditing ? handleSaveEdit : handleAddTodo}>
+            <IoIosAddCircle />
+          </button>
         </div>
         <ul className="todo-list">
           {todos.map((todo, index) => (
             <li key={index}>
               {todo}
-              <button onClick={() => handleRemoveTodo(index)}>
-                <MdDelete />
-              </button>
+              <div>
+                <button onClick={() => handleEditTodo(index)}><AiFillEdit /></button>
+                <button onClick={() => handleRemoveTodo(index)}>
+                  <MdDelete />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
