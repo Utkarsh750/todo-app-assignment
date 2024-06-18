@@ -2,4 +2,4 @@
 
 ### to run on local system , kindly run this command - npm install
 
-### this is the live link of Project - https://todo-app-assignment-ivory.vercel.app/
+### You can add your Todo's here - https://todo-app-assignment-ivory.vercel.app/
