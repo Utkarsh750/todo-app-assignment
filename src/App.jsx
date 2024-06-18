@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { MdDelete } from "react-icons/md";
 import "./App.css";
+import { IoIosAddCircle } from "react-icons/io";
 
 function App() {
   const [todos, setTodos] = useState(() => {
@@ -37,13 +39,15 @@ function App() {
             value={task}
             onChange={(e) => setTask(e.target.value)}
           />
-          <button onClick={handleAddTodo}>Add</button>
+          <button onClick={handleAddTodo}><IoIosAddCircle /></button>
         </div>
         <ul className="todo-list">
           {todos.map((todo, index) => (
             <li key={index}>
               {todo}
-              <button onClick={() => handleRemoveTodo(index)}>Remove</button>
+              <button onClick={() => handleRemoveTodo(index)}>
+                <MdDelete />
+              </button>
             </li>
           ))}
         </ul>
