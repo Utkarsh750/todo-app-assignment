@@ -6,7 +6,7 @@ import { AiFillEdit } from "react-icons/ai";
 
 function App() {
   const [todos, setTodos] = useState(() => {
-    // Load TODOs from local storage on app startup
+    // Load TODOs from local storage on app starts
     const storedTodos = localStorage.getItem("todos");
     return storedTodos ? JSON.parse(storedTodos) : [];
   });
